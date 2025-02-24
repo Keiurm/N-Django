@@ -1,18 +1,30 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# Create your views here.
-
 
 def index(request):
-    if "msg" in request.GET:
-        msg = request.GET["msg"]
-        res = "Query Parameter:" + msg
+    if "message" in request.GET and "title" in request.GET:
+        title, message = request.GET["title"], request.GET["message"]
+        params = {
+            "title": title,
+            "message": message,
+        }
+
     else:
-        res = "No Query Parameter"
-    return HttpResponse(res)
+        params = {
+            "title": "Hello Django!",
+            "message": "これはサンプルで作った hello のページです",
+        }
+    params["goto"] = "next"
+    params["numbers"] = range(5)
+    params["items"] = ["apple", "tomato", "banana", "melon"]
+    return render(request, "hello/index.html", params)
 
 
-def information(request, id, name, age):
-    res = "Your name:{}, Your ID:{}, Your age:{}".format(name, id, age)
-    return HttpResponse(res)
+def next(reqest):
+    params = {
+        "title": "hello/next",
+        "message": "これはサンプルで作った next のページです",
+        "goto": "index",
+    }
+    return render(reqest, "hello/index.html", params)
