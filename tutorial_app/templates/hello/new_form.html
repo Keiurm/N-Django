@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Form</title>
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <p>{{ result }}</p>
+        <form action="{% url 'new_form' %}" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="click">
+        </form>
+    </body>
+</html>
